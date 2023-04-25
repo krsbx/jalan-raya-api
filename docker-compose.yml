@@ -1,0 +1,25 @@
+version: '3.7'
+services:
+  # Postgres Service + PostGIS installed
+  db:
+    image: postgis/postgis
+    container_name: db_jalan-raya
+    restart: always
+    ports:
+      - ${DB_PORT}:5432
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    networks:
+      - jalanraya-network
+    volumes:
+      - ./tmp/jalanraya-postgis-data:/var/lib/postgresql/data/
+
+volumes:
+  jalanraya-postgis-data:
+
+# Docker Networks
+networks:
+  jalanraya-network:
+    driver: bridge

@@ -141,6 +141,8 @@ function init(sequelize: Sequelize, DataTypes: typeof DT) {
     },
     {
       sequelize,
+      createdAt: false,
+      updatedAt: false,
       modelName: 'jalan-rayas',
     }
   );

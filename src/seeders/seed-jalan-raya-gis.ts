@@ -35,14 +35,24 @@ module.exports = {
 
       if (!sqls) return;
 
-      await Promise.all([
-        ..._.map(sqls, (sql) => queryInterface.sequelize.query(sql)),
-        queryInterface.insert(null, 'seed-histories', {
-          name: SEEDER_NAME.SEED_JALAN_RAYA,
-          createdAt: now,
-          updatedAt: now,
-        }),
-      ]);
+      const historyData = {
+        name: SEEDER_NAME.SEED_JALAN_RAYA,
+        createdAt: now,
+        updatedAt: now,
+      };
+
+      await queryInterface.sequelize.transaction((transaction) =>
+        Promise.all([
+          ..._.map(sqls, (sql) =>
+            queryInterface.sequelize.query(sql, {
+              transaction,
+            })
+          ),
+          queryInterface.insert(null, 'seed-histories', historyData, {
+            transaction,
+          }),
+        ])
+      );
 
       console.log('Seeding GIS Data completed');
     } catch (err) {
@@ -64,12 +74,19 @@ module.exports = {
       return;
     }
 
-    await queryInterface.sequelize.query(
-      `DELETE FROM "seed-histories" WHERE id = ${
-        (seedHistory as SeedHistoryAttribute).id
-      }`
-    );
+    await queryInterface.sequelize.transaction((transaction) =>
+      Promise.all([
+        queryInterface.sequelize.query(
+          `DELETE FROM "seed-histories" WHERE id = ${
+            (seedHistory as SeedHistoryAttribute).id
+          }`,
+          { transaction }
+        ),
 
-    await queryInterface.sequelize.query(`TRUNCATE "jalan-rayas"`);
+        queryInterface.sequelize.query(`TRUNCATE "jalan-rayas"`, {
+          transaction,
+        }),
+      ])
+    );
   },
 };
