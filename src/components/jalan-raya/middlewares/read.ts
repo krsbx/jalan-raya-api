@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import asyncMw from 'express-asyncmw';
 import { createNotFoundResponse } from '@krsbx/response-formatter';
 import JalanRaya from '../models';
@@ -45,6 +46,27 @@ export const getJalanRayasMw = asyncMw<{
   );
 
   req.jalanRayas = jalanRayas;
+
+  return next();
+});
+
+export const getJalanRayaTypesMw = asyncMw<{
+  extends: {
+    types: string[];
+  };
+}>(async (req, res, next) => {
+  const types = await JalanRaya.instance.factory.findAll(
+    {
+      order: [['gid', 'ASC']],
+    },
+    req.filterQueryParams,
+    {
+      limit: 'all',
+      ...req.query,
+    }
+  );
+
+  req.types = _.uniq(_.map(types.rows, (type) => type.dataValues.remark));
 
   return next();
 });
