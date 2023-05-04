@@ -39,3 +39,11 @@ export const returnJalanRayasMw = asyncMw<{
     })
   );
 });
+
+export const returnJalanRayaTypesMw = asyncMw<{
+  extends: {
+    types: string[];
+  };
+}>(async (req, res) => {
+  return res.status(200).json(createResourceResponse(req, req.types));
+});

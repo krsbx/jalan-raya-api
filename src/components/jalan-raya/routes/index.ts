@@ -10,6 +10,13 @@ router.get(
   middlewares.response.returnJalanRayasMw
 );
 
+// GET /jalan-rayas/types
+router.get(
+  '/types',
+  middlewares.read.getJalanRayaTypesMw,
+  middlewares.response.returnJalanRayaTypesMw
+);
+
 // GET /jalan-rayas/:id
 router.get(
   '/:id',
