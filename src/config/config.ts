@@ -10,6 +10,7 @@ export = {
     port: process.env.DB_PORT,
     host: process.env.DB_HOST,
     dialect: 'postgres',
+    logging: process.env.IN_TEST ? false : console.log,
   },
   test: {
     username: process.env.DB_USER,
@@ -18,6 +19,7 @@ export = {
     port: process.env.DB_PORT,
     host: process.env.DB_HOST,
     dialect: 'postgres',
+    logging: process.env.IN_TEST ? false : console.log,
   },
   production: {
     username: process.env.DB_USER,
@@ -26,5 +28,6 @@ export = {
     port: process.env.DB_PORT,
     host: process.env.DB_HOST,
     dialect: 'postgres',
+    logging: process.env.IN_TEST ? false : console.log,
   },
 };

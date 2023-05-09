@@ -1,6 +1,10 @@
 import { DataTypes as DT, Model, Sequelize } from 'sequelize';
 import { Database } from 'sequelize-db-type/helper';
-import { CreateSeedHistoryAttribute, SeedHistoryAttribute } from './attributes';
+import {
+  CreateSeedHistoryAttribute,
+  SeedHistoryAttribute,
+  SeedHistoryModel,
+} from './attributes';
 import factory from '../../../shares/factory';
 import SeedHistoryFactory from './SeedHistoryFactory';
 import postFactory from './postFactory';
@@ -46,7 +50,7 @@ function init(sequelize: Sequelize, DataTypes: typeof DT) {
 
   SeedHistoryFactory.init(factored as never);
 
-  return SeedHistory;
+  return SeedHistory as never as SeedHistoryModel;
 }
 
 export default init;

@@ -1,12 +1,16 @@
 import fs from 'fs';
 import path from 'path';
+import appRootPath from 'app-root-path';
 import { Sequelize, DataTypes } from 'sequelize';
 import process from 'process';
 import { Database } from 'sequelize-db-type/helper';
 
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(path.resolve(__dirname, '../config/config.js'))[env];
+const config = require(path.resolve(
+  appRootPath.path,
+  'dist/src/config/config.js'
+))[env];
 
 const db: Database = {} as Database;
 
