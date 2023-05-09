@@ -7,7 +7,7 @@ import { SEEDER_NAME } from '../utils/constant';
 import { SeedHistoryAttribute } from '../components/seed-history/models/attributes';
 import * as helper from './helper';
 
-module.exports = {
+export = {
   async up(queryInterface: QueryInterface) {
     const [[seedHistory]] = await queryInterface.sequelize.query(
       `SELECT * FROM "seed-histories"`

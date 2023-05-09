@@ -1,6 +1,10 @@
 import { DataTypes as DT, Model, Sequelize } from 'sequelize';
 import { Database } from 'sequelize-db-type/helper';
-import { CreateJalanRayaAttribute, JalanRayaAttribute } from './attributes';
+import {
+  CreateJalanRayaAttribute,
+  JalanRayaAttribute,
+  JalanRayaModel,
+} from './attributes';
 import factory from '../../../shares/factory';
 import JalanRayaFactory from './JalanRayaFactory';
 import postFactory from './postFactory';
@@ -152,7 +156,7 @@ function init(sequelize: Sequelize, DataTypes: typeof DT) {
 
   JalanRayaFactory.init(factored as never);
 
-  return JalanRaya;
+  return JalanRaya as never as JalanRayaModel;
 }
 
 export default init;
